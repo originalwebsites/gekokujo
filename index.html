@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="paper">
-  <h1>下剋上数学</h1>  <div class="info">
+  <h1>数 学 小 テ ス ト</h1>  <div class="info">
     <div>氏名：</div>
     <div>得点：</div>
   </div>  <!-- ===== 問題構成 ===== -->  <div class="section">
@@ -60,18 +60,26 @@
   // "q1_1":700,
   // "q2_2":765,
 
+  // 正解（文字式対応）
   const answers = {
-  "q1_1":4/π,
-  "q1_2":1,
-    "q1_3":8/7,
-    "q1_4":1,
-    "q1_5":28,77,
+    "q1_1": "π/4",
+    "q1_2": "12",
+    "q1_3": "7/8",
+    "q1_4": "1",
+    "q1_5": "28,77",
+    "q2_1": "21",
+    "q2_2": "22",
+    "q3": "5",
+    "q4": "4",
+    "q5_1": "700n",
+    "q5_2": "700n+65",
+    "q6": "st+uv"
   };
   // ======================================================
 
   const allInputs = document.querySelectorAll("input");
 
-  function normalizeNumber(str) {
+  function normalize(str) {
     return str
       .replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
       .replace(/－/g, '-')
