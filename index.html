@@ -33,7 +33,7 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 </div>
 
 <div class="explanation">
-入力された内容は採点されたら即時に製作者へ入力内容が送られます。答える値が複数ある場合（例:範囲を答える問題、最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
+入力された内容は採点されると製作者に内容が送られます。答える値が複数ある場合（例:範囲を答える問題、最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
 </div>
 
 <!-- ===== 問題構成 ===== -->
@@ -106,27 +106,23 @@ function normalize(str){
                  .replace(/\s+/g,"").trim();
 }
 
-// 交換法則・絶対値対応
+// 絶対値内の順序をソートして同一視
+function normalizeAbs(expr){
+  return expr.replace(/\|([^\|]+)\|/g,(match, p1)=>{
+    const parts = p1.split(/[-\*+]/).map(s=>s.trim()).sort();
+    const ops = p1.replace(/[^\-\*\+]/g,""); // 演算子のみ保持
+    return '|' + parts.join('') + '|' + ops;
+  });
+}
+
+// 交換法則と絶対値内順序ソートを統合
 function canonical(expr){
   expr = normalize(expr);
+  expr = normalizeAbs(expr);
 
-  // 絶対値判定: |...|
-  let isAbs = false;
-  if(expr.startsWith('|') && expr.endsWith('|')){
-    isAbs = true;
-    expr = expr.slice(1,-1); // | を除去
-  }
-
-  // +, * はソート
-  if(expr.includes('+')){
-    expr = expr.split('+').map(s=>s.trim()).sort().join('+');
-  } else if(expr.includes('*')){
-    expr = expr.split('*').map(s=>s.trim()).sort().join('*');
-  } else if(expr.includes('-') && isAbs){
-    expr = expr.split('-').map(s=>s.trim()).sort().join('-');
-  }
-
-  if(isAbs) expr = '|' + expr + '|';
+  // +や*で区切った部分の順序をソート
+  if(expr.includes('+')) return expr.split('+').map(s=>s.trim()).sort().join('+');
+  if(expr.includes('*')) return expr.split('*').map(s=>s.trim()).sort().join('*');
   return expr;
 }
 
