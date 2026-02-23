@@ -33,7 +33,7 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 </div>
 
 <div class="explanation">
-答える値が2つある場合（例:範囲を答える問題、解が2つある問題など）は「,」で区切って答えてください。
+答える値が複数ある場合（例:範囲を答える問題、最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
 </div>
 
 <!-- ===== 問題構成 ===== -->
@@ -95,7 +95,7 @@ const answers = {
   "q2_1": { value:"21", points:5 },
   "q2_2": { value:"22", points:10 },
   "q3":   { value:"5", points:15 },
-  "q4":   { value:"4", points:15 },
+  "q4":   { value:"500/3,4000/3", points:15 },
   "q5_1": { value:"700n", points:8 },
   "q5_2": { value:"700n+65", points:7 },
   "q6":   { value:"st+uv", points:15 }
