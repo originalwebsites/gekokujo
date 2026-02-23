@@ -6,11 +6,11 @@
 <style>
 body { font-family:"Yu Mincho", serif; background:#e9ecef; margin:0; padding:30px 0; }
 .paper { width:800px; margin:auto; background:#fff; padding:40px 50px; box-shadow:0 0 10px rgba(0,0,0,0.15); }
-h1 { text-align:center; letter-spacing:4px; margin-bottom:30px; }
-.info { display:flex; justify-content:space-between; margin-bottom:25px; }
+h1 { text-align:center; letter-spacing:4px; margin-bottom:20px; }
+.info { display:flex; justify-content:space-between; margin-bottom:5px; }
 .info div { width:45%; }
 .name-input { border:none; border-bottom:2px solid #000; width:200px; font-size:18px; padding:4px; }
-.section { margin-top:25px; }
+.section { margin-top:20px; }
 .section-title { font-weight:bold; margin-bottom:10px; }
 .question { margin:10px 0; display:flex; align-items:center; }
 .label { width:80px; }
@@ -18,7 +18,8 @@ input.answer { border:none; border-bottom:2px solid #000; width:220px; font-size
 .result { margin-left:15px; font-weight:bold; font-size:18px; }
 .buttons { text-align:center; margin-top:30px; }
 button { padding:8px 20px; margin:0 10px; font-size:15px; }
-#score { text-align:right; font-size:20px; margin-top:20px; font-weight:bold; }
+#score { text-align:right; font-size:20px; font-weight:bold; }
+.explanation { font-size:14px; margin-bottom:15px; }
 </style>
 </head>
 
@@ -28,7 +29,11 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 
 <div class="info">
   <div>氏名：<input id="studentName" class="name-input"></div>
-  <div>数字、記号は半角で入力してください：</div>
+  <div id="score">得点：</div>
+</div>
+
+<div class="explanation">
+答える値が2つある場合（例:範囲を答える問題、解が2つある問題など）は「,」で区切って答えてください。
 </div>
 
 <!-- ===== 問題構成 ===== -->
@@ -76,10 +81,6 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 
 <div class="buttons">
   <button onclick="grade()">採点</button>
-  <button onclick="resetAll()">リセット</button>
-</div>
-
-<div id="score"></div>
 </div>
 
 <script>
@@ -149,12 +150,6 @@ function sendToSheet(score,total){
   }
 
   fetch(GAS_URL, { method:"POST", mode:"no-cors", body:JSON.stringify(data) });
-}
-
-function resetAll(){
-  document.querySelectorAll("input").forEach(i=>i.value="");
-  document.querySelectorAll(".result").forEach(r=>r.textContent="");
-  document.getElementById("score").textContent="";
 }
 </script>
 </body>
