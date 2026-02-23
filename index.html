@@ -107,15 +107,14 @@ function normalize(str){
                  .replace(/\s+/g,"").trim();
 }
 
-// 絶対値内の項の順序と符号を無視して同一視
+// 絶対値内の項は符号無視・アルファベット順でソート
 function canonical(expr){
   expr = normalize(expr);
 
   expr = expr.replace(/\|([^\|]+)\|/g,(match,p1)=>{
-    // 項を符号無視で取り出してソート
     let terms = p1.split(/[-+]/).map(s=>s.trim()).filter(s=>s!=="");
     terms.sort(); // アルファベット順
-    return '|' + terms.join('-') + '|'; // 絶対値再構築
+    return '|' + terms.join('-') + '|';
   });
 
   // 絶対値外の + と * の交換法則
