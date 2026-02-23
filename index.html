@@ -14,12 +14,13 @@ h1 { text-align:center; letter-spacing:4px; margin-bottom:20px; }
 .section-title { font-weight:bold; margin-bottom:10px; }
 .question { margin:10px 0; display:flex; align-items:center; }
 .label { width:80px; }
-input.answer { border:none; border-bottom:2px solid #000; width:220px; font-size:18px; padding:4px; text-align:center; }
+input.answer { border:none; border-bottom:2px solid #000; width:100px; font-size:18px; padding:4px; text-align:center; }
 .result { margin-left:15px; font-weight:bold; font-size:18px; }
 .buttons { text-align:center; margin-top:30px; }
 button { padding:8px 20px; margin:0 10px; font-size:15px; }
 #score { text-align:right; font-size:20px; font-weight:bold; }
 .explanation { font-size:14px; margin-bottom:15px; }
+.range-label { margin:0 5px; font-weight:bold; font-size:18px; }
 </style>
 </head>
 
@@ -33,8 +34,9 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
 </div>
 
 <div class="explanation">
-入力された内容は採点されると即時に製作者に送信されます。また、数字、文字、記号は全て半角で打つこと。<br>
-答える値が複数ある場合（例:範囲を答える問題、最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
+入力された内容は採点されると即時に製作者に送信されます。<br>
+数字、文字、記号は全て半角で入力してください。<br>
+答える値が複数ある場合（例:最大値最小値、解が2つある問題など）は問題文で聞かれている順に「,」で区切って答えてください。
 </div>
 
 <!-- ===== 問題構成 ===== -->
@@ -44,7 +46,14 @@ button { padding:8px 20px; margin:0 10px; font-size:15px; }
   <div class="question"><div class="label">(2)</div><input class="answer" id="q1_2"><span class="result" id="r1_2"></span></div>
   <div class="question"><div class="label">(3)</div><input class="answer" id="q1_3"><span class="result" id="r1_3"></span></div>
   <div class="question"><div class="label">(4)</div><input class="answer" id="q1_4"><span class="result" id="r1_4"></span></div>
-  <div class="question"><div class="label">(5)</div><input class="answer" id="q1_5"><span class="result" id="r1_5"></span></div>
+  <!-- 問1(5)を「≤S<」形式で表示 -->
+  <div class="question">
+    <div class="label">(5)</div>
+    <input class="answer" id="q1_5_min" placeholder="下限">
+    <span class="range-label">≤S&lt;</span>
+    <input class="answer" id="q1_5_max" placeholder="上限">
+    <span class="result" id="r1_5"></span>
+  </div>
 </div>
 
 <div class="section">
@@ -92,7 +101,6 @@ const answers = {
   "q1_2": { value:"10946", points:5 },
   "q1_3": { value:"8/7", points:5 },
   "q1_4": { value:"0", points:5 },
-  "q1_5": { value:"28,77", points:5 },
   "q2_1": { value:"8/3", points:5 },
   "q2_2": { value:"3", points:10 },
   "q3":   { value:"√5", points:15 },
@@ -101,6 +109,9 @@ const answers = {
   "q5_2": { value:"700n+65", points:7 },
   "q6":   { value:"|sv-tu|^n", points:15 }
 };
+
+// 問1(5)の正解
+const q1_5_answer = { min:"28", max:"77", points:5 };
 
 function normalize(str){
   return (str||"").replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0))
@@ -130,6 +141,22 @@ function grade(){
   let total=0;
 
   for(const id in answers){
+    // 問1(5)は「≤S<」形式で別処理
+    if(id === "q1_5"){
+      const minInput = normalize(document.getElementById("q1_5_min").value);
+      const maxInput = normalize(document.getElementById("q1_5_max").value);
+      const result = document.getElementById("r1_5");
+      total += q1_5_answer.points;
+
+      if(minInput === q1_5_answer.min && maxInput === q1_5_answer.max){
+        result.textContent = "○";
+        score += q1_5_answer.points;
+      } else {
+        result.textContent = "×";
+      }
+      continue;
+    }
+
     const input=document.getElementById(id).value;
     const result=document.getElementById("r"+id.slice(1));
     const correct=answers[id];
@@ -159,6 +186,9 @@ function sendToSheet(score,total){
   for(const id in answers){
     data.answers[id] = document.getElementById(id).value;
   }
+  // 問1(5)の入力も送信
+  data.answers["q1_5_min"] = document.getElementById("q1_5_min").value;
+  data.answers["q1_5_max"] = document.getElementById("q1_5_max").value;
 
   fetch(GAS_URL, { method:"POST", mode:"no-cors", body:JSON.stringify(data) });
 }
