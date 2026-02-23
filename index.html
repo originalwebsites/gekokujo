@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>採点システム</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; background: #f7f7f7; }
+    h1 { margin-bottom: 10px; }
+    .question { background: #fff; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
+    input { padding: 6px; width: 140px; }
+    button { padding: 8px 16px; margin-top: 10px; }
+    .result { font-weight: bold; margin-left: 10px; }
+    #score { font-size: 20px; margin-top: 20px; }
+  </style>
+</head>
+<body><h1>解答入力</h1>
+<p>答えの数値を入力してください。</p><div id="questions"></div><button onclick="grade()">採点する</button> <button onclick="resetAll()">リセット</button>
+
+<div id="score"></div><script>
+  // ====== 正解をここに入力（数値そのもの） ======
+  // 例：第1問 700、第2問 765
+  const answers = [700, 765];
+  // 問題を増やすときは [700,765,1400,...] のように追加
+  // ============================================
+
+  const QUESTION_COUNT = answers.length;
+  const container = document.getElementById("questions");
+
+  // 問題欄を生成
+  for (let i = 0; i < QUESTION_COUNT; i++) {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `
+      <label>問題 ${i+1}：</label>
+      <input type="text" id="q${i}" placeholder="数値を入力">
+      <span class="result" id="r${i}"></span>
+    `;
+    container.appendChild(div);
+  }
+
+  function isInteger(value) {
+    return /^[-]?\\d+$/.test(value);
+  }
+
+  function grade() {
+    let score = 0;
+
+    for (let i = 0; i < QUESTION_COUNT; i++) {
+      const input = document.getElementById(`q${i}`).value.trim();
+      const result = document.getElementById(`r${i}`);
+
+      if (!isInteger(input)) {
+        result.textContent = "×（整数で入力）";
+        result.style.color = "red";
+        continue;
+      }
+
+      const value = parseInt(input, 10);
+
+      if (value === answers[i]) {
+        result.textContent = "○";
+        result.style.color = "green";
+        score++;
+      } else {
+        result.textContent = "×";
+        result.style.color = "red";
+      }
+    }
+
+    document.getElementById("score").textContent = `得点：${score} / ${QUESTION_COUNT}`;
+  }
+
+  function resetAll() {
+    for (let i = 0; i < QUESTION_COUNT; i++) {
+      document.getElementById(`q${i}`).value = "";
+      document.getElementById(`r${i}`).textContent = "";
+    }
+    document.getElementById("score").textContent = "";
+  }
+</script></body>
+</html>
