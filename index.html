@@ -31,12 +31,13 @@ button { padding:10px 25px; font-size:16px; }
 <h1>下 剋 上 数 学</h1>
 
 <div class="info">
-<div>氏名：<input id="studentName" class="name-input"></div>
+<div>氏名：<input id="studentName" name="studentName" class="name-input"></div>
 <div id="score">得点：</div>
 </div>
 
 <div class="explanation">
-数字・文字・記号はすべて半角で入力すること。単位は不要。
+数字・文字・記号はすべて半角で入力すること。<br>
+答える値が2つある場合は「,」ではなく、それぞれの欄に入力すること。
 </div>
 
 <!-- ===== 大問1 ===== -->
@@ -44,20 +45,20 @@ button { padding:10px 25px; font-size:16px; }
 <div class="section-title">大問1（各5点）</div>
 
 <div class="question"><div class="label">(1)</div>
-<input class="answer" id="q1_1"><span class="result" id="r1_1"></span></div>
+<input class="answer" id="q1_1" name="q1_1"><span class="result" id="r1_1"></span></div>
 
 <div class="question"><div class="label">(2)</div>
-<input class="answer" id="q1_2"><span class="result" id="r1_2"></span></div>
+<input class="answer" id="q1_2" name="q1_2"><span class="result" id="r1_2"></span></div>
 
 <div class="question"><div class="label">(3)</div>
-<input class="answer" id="q1_3"><span class="result" id="r1_3"></span></div>
+<input class="answer" id="q1_3" name="q1_3"><span class="result" id="r1_3"></span></div>
 
 <div class="question"><div class="label">(4)</div>
-<input class="answer" id="q1_4"><span class="result" id="r1_4"></span></div>
+<input class="answer" id="q1_4" name="q1_4"><span class="result" id="r1_4"></span></div>
 
 <div class="question"><div class="label">(5)</div>
-<input class="range-answer" id="q1_5_min"> ≤ S <
-<input class="range-answer" id="q1_5_max">
+<input class="range-answer" id="q1_5_min" name="q1_5_min"> ≤ S <
+<input class="range-answer" id="q1_5_max" name="q1_5_max">
 <span class="result" id="r1_5"></span>
 </div>
 </div>
@@ -66,11 +67,11 @@ button { padding:10px 25px; font-size:16px; }
 <div class="section">
 <div class="section-title">大問2</div>
 
-<div class="question"><div class="label">(1) 8点</div>
-<input class="answer" id="q2_1"><span class="result" id="r2_1"></span></div>
+<div class="question"><div class="label">(1)</div>
+<input class="answer" id="q2_1" name="q2_1"><span class="result" id="r2_1"></span></div>
 
-<div class="question"><div class="label">(2) 7点</div>
-<input class="answer" id="q2_2"><span class="result" id="r2_2"></span></div>
+<div class="question"><div class="label">(2)</div>
+<input class="answer" id="q2_2" name="q2_2"><span class="result" id="r2_2"></span></div>
 </div>
 
 <!-- ===== 大問3 ===== -->
@@ -78,7 +79,7 @@ button { padding:10px 25px; font-size:16px; }
 <div class="section-title">大問3（15点）</div>
 
 <div class="question">
-<input class="answer" id="q3"><span class="result" id="r3"></span>
+<input class="answer" id="q3" name="q3"><span class="result" id="r3"></span>
 </div>
 </div>
 
@@ -87,10 +88,10 @@ button { padding:10px 25px; font-size:16px; }
 <div class="section-title">大問4（完答15点）</div>
 
 <div class="question"><div class="label">最大値</div>
-<input class="range-answer" id="q4_max"></div>
+<input class="range-answer" id="q4_max" name="q4_max"></div>
 
 <div class="question"><div class="label">最小値</div>
-<input class="range-answer" id="q4_min">
+<input class="range-answer" id="q4_min" name="q4_min">
 <span class="result" id="r4"></span></div>
 </div>
 
@@ -98,11 +99,11 @@ button { padding:10px 25px; font-size:16px; }
 <div class="section">
 <div class="section-title">大問5</div>
 
-<div class="question"><div class="label">(1) 8点</div>
-<input class="answer" id="q5_1"><span class="result" id="r5_1"></span></div>
+<div class="question"><div class="label">(1)</div>
+<input class="answer" id="q5_1" name="q5_1"><span class="result" id="r5_1"></span></div>
 
-<div class="question"><div class="label">(2) 7点</div>
-<input class="answer" id="q5_2"><span class="result" id="r5_2"></span></div>
+<div class="question"><div class="label">(2)</div>
+<input class="answer" id="q5_2" name="q5_2"><span class="result" id="r5_2"></span></div>
 </div>
 
 <!-- ===== 大問6 ===== -->
@@ -110,14 +111,14 @@ button { padding:10px 25px; font-size:16px; }
 <div class="section-title">大問6（15点）</div>
 
 <div class="question">
-<input class="answer" id="q6"><span class="result" id="r6"></span>
+<input class="answer" id="q6" name="q6"><span class="result" id="r6"></span>
 </div>
 </div>
 
 <!-- 感想 -->
 <div class="section">
 <div class="section-title">感想</div>
-<input id="comment" class="answer">
+<input id="comment" name="comment" class="answer">
 </div>
 
 <div class="buttons">
@@ -127,74 +128,74 @@ button { padding:10px 25px; font-size:16px; }
 </div>
 
 <script>
-/* ★あなたのGAS URLをここに貼る */
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimInsxYqWSmAsfh5qijN0gD4ntmvjLLqTRmFzReEV0-evSSn/exec";
+const GAS_URL="https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimInsxYqWSmAsfh5qijN0gD4ntmvjLLqTRmFzReEV0-evSSn/exec";
 
-/* 正答 */
-const answers = {
-  q1_1:{value:"3π/4",points:5},
-  q1_2:{value:"10946",points:5},
-  q1_3:{value:"8/7",points:5},
-  q1_4:{value:"0",points:5},
-  q1_5:{value:["28","77"],points:5},
-  q2_1:{value:"8/3",points:8},
-  q2_2:{value:"3",points:7},
-  q3:{value:"√5",points:15},
-  q4:{value:["2000/3","500/3"],points:15},
-  q5_1:{value:"700n",points:8},
-  q5_2:{value:"700n+65",points:7},
-  q6:{value:"|sv-tu|^n",points:15}
+const answers={
+q1_1:{value:"3π/4",points:5},
+q1_2:{value:"10946",points:5},
+q1_3:{value:"8/7",points:5},
+q1_4:{value:"0",points:5},
+q1_5:{value:["28","77"],points:5},
+q2_1:{value:"8/3",points:8},
+q2_2:{value:"3",points:7},
+q3:{value:"√5",points:15},
+q4:{value:["2000/3","500/3"],points:15},
+q5_1:{value:"700n",points:8},
+q5_2:{value:"700n+65",points:7},
+q6:{value:"|sv-tu|^n",points:15}
 };
 
-function normalize(str){
-  return (str||"").replace(/\s+/g,"").trim();
-}
+function normalize(s){return (s||"").replace(/\s+/g,"");}
 
 function grade(){
-  let score=0,total=0;
+let score=0,total=0;
 
-  for(const id in answers){
-    total+=answers[id].points;
+for(const id in answers){
+total+=answers[id].points;
 
-    if(id==="q1_5"){
-      const a=normalize(q1_5_min.value);
-      const b=normalize(q1_5_max.value);
-      r1_5.textContent=(a===answers[id].value[0]&&b===answers[id].value[1])?"○":"×";
-      if(r1_5.textContent==="○")score+=5;
-      continue;
-    }
-
-    if(id==="q4"){
-      const a=normalize(q4_max.value);
-      const b=normalize(q4_min.value);
-      r4.textContent=(a===answers[id].value[0]&&b===answers[id].value[1])?"○":"×";
-      if(r4.textContent==="○")score+=15;
-      continue;
-    }
-
-    const input=normalize(document.getElementById(id).value);
-    const res=document.getElementById("r"+id.slice(1));
-
-    if(input===answers[id].value){
-      res.textContent="○";
-      score+=answers[id].points;
-    }else res.textContent="×";
-  }
-
-  document.getElementById("score").textContent=`得点：${score} / ${total}`;
-  send(score,total);
+if(id==="q1_5"){
+if(normalize(q1_5_min.value)===answers[id].value[0] &&
+   normalize(q1_5_max.value)===answers[id].value[1]){
+r1_5.textContent="○"; score+=5;
+}else r1_5.textContent="×";
+continue;
 }
 
-/* GASへ送信（FormData方式） */
-function send(score,total){
-  const fd=new FormData();
-  fd.append("name",studentName.value);
-  fd.append("comment",comment.value);
-  fd.append("score",score);
-  fd.append("total",total);
-  fd.append("time",new Date().toLocaleString());
+if(id==="q4"){
+if(normalize(q4_max.value)===answers[id].value[0] &&
+   normalize(q4_min.value)===answers[id].value[1]){
+r4.textContent="○"; score+=15;
+}else r4.textContent="×";
+continue;
+}
 
-  fetch(GAS_URL,{method:"POST",body:fd});
+const input=normalize(document.getElementById(id).value);
+const res=document.getElementById("r"+id.slice(1));
+
+if(input===answers[id].value){res.textContent="○";score+=answers[id].points;}
+else res.textContent="×";
+}
+
+document.getElementById("score").textContent=`得点：${score} / ${total}`;
+send(score,total);
+}
+
+function send(score,total){
+const fd=new FormData();
+
+fd.append("studentName",studentName.value);
+fd.append("comment",comment.value);
+fd.append("score",score);
+fd.append("total",total);
+fd.append("time",new Date().toLocaleString());
+
+["q1_1","q1_2","q1_3","q1_4","q1_5_min","q1_5_max",
+ "q2_1","q2_2","q3","q4_max","q4_min",
+ "q5_1","q5_2","q6"].forEach(id=>{
+fd.append(id,document.getElementById(id).value);
+});
+
+fetch(GAS_URL,{method:"POST",body:fd});
 }
 </script>
 </body>
