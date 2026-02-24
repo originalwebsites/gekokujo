@@ -177,22 +177,26 @@ function normalize(s){
   };
 
   // 積の順序入替（tu ⇔ ut）
-  const swapMul = x=>{
-    return x.replace(/([a-z])([a-z])/gi,"$2$1");
-  };
+  // 各項の文字の並びをアルファベット順に揃える（sv → sv, vs → sv）
+const normalizeProduct = expr => {
+
+  return expr.replace(/[a-z]+/gi, term => {
+    return term.split("").sort().join("");
+  });
+
+};
 
   // 数学的に同じ可能性を全部比較
-  const patterns = [
-    a,
-    neg(a),
-    swapMul(a),
-    neg(swapMul(a)),
-    swapDiff(a),
-    neg(swapDiff(a)),
-    swapMul(swapDiff(a)),
-    neg(swapMul(swapDiff(a)))
-  ];
+  // まず掛け算を標準化
+a = normalizeProduct(a);
+b = normalizeProduct(b);
 
+const patterns = [
+  a,
+  neg(a),
+  swapDiff(a),
+  neg(swapDiff(a))
+].map(normalizeProduct);
   return patterns.includes(b);
   }
 function grade(){
