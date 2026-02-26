@@ -240,15 +240,12 @@ send(score,total);
 
 // ↓ ここから追加処理
 setTimeout(()=>{
-  const goAnswer = confirm("解答を見ますか？\n「OK」→模範解答へ\n「キャンセル」→続けて解き直す");
+  const goAnswer = confirm("解答を見ますか？\n「OK」→模範解答へ(点数が見れない可能性があります)\n「キャンセル」→続けて解き直す");
 
   if(goAnswer){
     // 模範解答ページへ移動
     window.location.href = ANSWER_PAGE_URL;
   }else{
-    // 氏名を残して他をリセット
-    resetAnswers();
-  }
 },300);
 }
 
