@@ -238,19 +238,15 @@ if(id==="q6"){
 document.getElementById("score").textContent=`得点：${score} / ${total}`;
 send(score,total);
 
-// ↓ ここから追加処理
+// ↓ 採点後に確認ダイアログを出す
 setTimeout(()=>{
-  const goAnswer = confirm("解答を見ますか？\n「OK」→模範解答へ\n「キャンセル」→続けて解き直す");
+  const go = confirm("解答を見ますか？\nOK：模範解答へ\nキャンセル：このまま結果を見る");
 
-  if(goAnswer){
-    // 模範解答ページへ移動
-    window.location.href = ANSWER_PAGE_URL;
-  }else{
-    // 氏名を残して他をリセット
-    resetAnswers();
+  if(go){
+    window.location.href = "ここに模範解答ページのURLを貼る";
   }
+  // キャンセル時は何もしない（←これが重要）
 },300);
-}
 function send(score,total){
 
   const fd = new FormData();
