@@ -129,7 +129,7 @@ button { padding:10px 25px; font-size:16px; }
 
 <script>
 const GAS_URL="https://script.google.com/macros/s/AKfycbwB3YoXRdlNaHM8LZBCimInsxYqWSmAsfh5qijN0gD4ntmvjLLqTRmFzReEV0-evSSn/exec";
-
+const ANSWER_PAGE_URL = "https://originalwebsites.github.io/gekokujo_answer/";
 const answers={
 q1_1:{value:"3π/4",points:5},
 q1_2:{value:"10946",points:5},
@@ -237,6 +237,19 @@ if(id==="q6"){
 
 document.getElementById("score").textContent=`得点：${score} / ${total}`;
 send(score,total);
+
+// ↓ ここから追加処理
+setTimeout(()=>{
+  const goAnswer = confirm("解答を見ますか？\n「OK」→模範解答へ\n「キャンセル」→続けて解き直す");
+
+  if(goAnswer){
+    // 模範解答ページへ移動
+    window.location.href = ANSWER_PAGE_URL;
+  }else{
+    // 氏名を残して他をリセット
+    resetAnswers();
+  }
+},300);
 }
 
 function send(score,total){
@@ -273,6 +286,23 @@ function send(score,total){
 
   fetch(GAS_URL, { method:"POST", body:fd });
 }
+  function resetAnswers(){
+
+  // 入力欄を全部取得
+  document.querySelectorAll("input").forEach(el=>{
+    if(el.id !== "studentName"){   // 氏名だけ残す
+      el.value="";
+    }
+  });
+
+  // ○×表示を消す
+  document.querySelectorAll(".result").forEach(el=>{
+    el.textContent="";
+  });
+
+  // 得点表示リセット
+  document.getElementById("score").textContent="得点：";
+  }
 </script>
 </body>
 </html>
