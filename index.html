@@ -286,23 +286,7 @@ function send(score,total){
 
   fetch(GAS_URL, { method:"POST", body:fd });
 }
-  function resetAnswers(){
-
-  // 入力欄を全部取得
-  document.querySelectorAll("input").forEach(el=>{
-    if(el.id !== "studentName"){   // 氏名だけ残す
-      el.value="";
-    }
-  });
-
-  // ○×表示を消す
-  document.querySelectorAll(".result").forEach(el=>{
-    el.textContent="";
-  });
-
-  // 得点表示リセット
-  document.getElementById("score").textContent="得点：";
-  }
+  
 </script>
 </body>
 </html>
